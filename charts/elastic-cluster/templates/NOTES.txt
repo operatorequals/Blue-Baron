@@ -1,0 +1,9 @@
+1. Get ElasticSearch Cluster Credentials with the below command:
+echo elastic:$(kubectl get secrets {{ .Values.elasticsearch.name }}-es-elastic-user -o json | jq -r .data.elastic | base64 --decode)
+
+2. Create an "Authorization: Basic [...]" header:
+curl -u "elastic:$(kubectl get secrets {{ .Values.elasticsearch.name }}-es-elastic-user -o json | jq -r .data.elastic | base64 --decode)" https://127.0.0.1:9200 -k
+
+3. Port-forward Kibana service
+kubectl port-forward svc/{{ .Values.kibana.name }}-kb-http 5601
+curl https://127.0.0.1:5601 -k
