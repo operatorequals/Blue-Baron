@@ -1,0 +1,39 @@
+# ----
+elasticsearch:
+  name: ""
+  version: 7.9.0
+  nodeSets:
+    - name: nset1
+      count: 1
+      mmap:
+        vm_max_map_count: 262144
+        enabled: false
+      roles:
+        - "master"
+        - "data"
+        - "ingest"
+      limits:
+        cpu: 0.9
+        memory: 2Gi
+      heapSize: 1700m  # Use [m for Megabytes, g for gigabytes]
+      volumeClaims:
+        enabled: true
+        class: standard
+        size: 512Mi
+  service:
+    enabled: true
+    type: ClusterIP
+    # name: elastisearch
+# ----
+kibana:
+  name: ""
+  version: 7.9.0
+  # To increase "count" - 'xpack.encryptedSavedObjects.encryptionKey' needs to be set
+  count: 1
+  encryptionKey:
+    enabled: True
+    # 'xpack.encryptedSavedObjects.encryptionKey' value:
+    value: "" # If blank, a random key will be generated
+  limits:
+    cpu: 0.5
+    memory: 1Gi
