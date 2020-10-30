@@ -1,0 +1,67 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: {{ .Values.elasticsearch.name }}
+spec:
+  version: {{ .Values.elasticsearch.version }}
+  {{- range $nset := .Values.elasticsearch.nodeSets }}
+  nodeSets:
+  - name: {{ $nset.name }}
+    config:
+      # most Elasticsearch configuration parameters are possible to set, e.g: node.attr.attr_name: attr_value
+      node.roles:
+      {{- range $role := $nset.roles }}
+        - "{{ $role }}"
+      {{- end }}
+      node.store.allow_mmap: {{ $nset.mmap.enabled }}
+    podTemplate:
+      metadata:
+        labels:
+          # additional labels for pods
+          foo: bar
+      spec:
+        {{- if $nset.mmap.enabled }}
+        initContainers:
+        - name: sysctl
+          securityContext:
+            privileged: true
+          command: ['sh', '-c', 'sysctl -w vm.max_map_count={{ $nset.mmap.vm_max_map_count | default 262144 }}']
+        {{- end }}
+
+        # uncomment the line below if you are using a service mesh such as linkerd2 that uses service account tokens for pod identification.
+        # automountServiceAccountToken: true
+        containers:
+        - name: elasticsearch
+          # specify resource limits and requests
+          resources:
+            limits:
+              memory: {{ $nset.limits.memory }}
+              cpu: {{ $nset.limits.cpu }}
+          env:
+          - name: ES_JAVA_OPTS
+            value: "-Xms{{ $nset.heapSize | default 1024 }} -Xmx{{ $nset.heapSize | default 1024 }}"
+    count: {{ $nset.count }}
+    {{- if $nset.volumeClaims.enabled }}
+    volumeClaimTemplates:
+      - metadata:
+          name: elasticsearch-data
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: {{ $nset.volumeClaims.size }}
+          storageClassName: {{ $nset.volumeClaims.class }}
+    {{- end }}
+  {{- end }}
+  {{- if .Values.elasticsearch.service.enabled }}
+  http:
+    service:
+      {{- if .Values.elasticsearch.service.name }}
+      metadata:
+        name: {{ .Values.elasticsearch.service.name }}
+      {{- end }}
+      spec:
+        type: {{ .Values.elasticsearch.service.type }}
+
+{{ end }}
