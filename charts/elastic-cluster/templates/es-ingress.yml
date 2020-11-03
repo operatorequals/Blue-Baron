@@ -1,0 +1,58 @@
+{{- if .Values.elasticsearch.ingress.enabled }}
+{{- $elasticsearchName := .Values.elasticsearch.name }}
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Values.elasticsearch.name }}-ingress
+  annotations:
+    {{- range $index, $value := .Values.elasticsearch.ingress.annotations}}
+    {{$index}}: "{{ $value }}" 
+    {{- end}}
+  labels:
+    app: {{ template "elastic-cluster.name" . }}
+    chart: {{ template "elastic-cluster.chart" . }}
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  rules:
+  {{- range $host := .Values.elasticsearch.ingress.hosts }}
+  - host: {{ $host.name }}
+    http:
+      paths:
+      - path: {{ $host.path }}
+        backend:
+          serviceName: {{ $elasticsearchName }}-es-http
+          servicePort: 9200
+  {{- end }}
+  {{- if not .Values.elasticsearch.ingress.hosts }}
+  - host: "{{ .Values.elasticsearch.name }}.bluebaron.local"
+    http:
+      paths:
+      - path: "/"
+        backend:
+          serviceName: {{ $elasticsearchName }}-es-http
+          servicePort: 9200
+  {{- end }}  
+  {{- if (hasKey .Values.elasticsearch.ingress "tls") }}
+  tls:
+        {{- range .Values.elasticsearch.ingress.tls }}
+    - hosts:
+          {{- range .hosts }}
+          - {{ . | quote }}
+          {{- end }}
+      secretName: {{ .secretName }}
+        {{- end }}
+
+    {{- if not .Values.elasticsearch.ingress.tls }}
+      - hosts:
+          {{- range .hosts }}
+          - {{ . | quote }}
+          {{- end }}
+          - "{{ .Values.elasticsearch.name }}.bluebaron.local"
+        secretName: {{ .Values.elasticsearch.name }}-es-http-ca-public
+    {{- end }}
+  {{- else }}
+  # No TLS for the ingress
+  {{- end }}
+{{- end }}
+
