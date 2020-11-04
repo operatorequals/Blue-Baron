@@ -76,7 +76,7 @@ resource "helm_release" "fluentd-in" {
   }
 
   set {
-    name  = "extraEnvVars[0].value"
+    name  = "output.host"
     value = var.es_host
   }
   set {
