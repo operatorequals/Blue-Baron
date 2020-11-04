@@ -11,17 +11,17 @@ output "es-certs"{
 }
 
 output "es-dns-internal"{
-  value = "${var.es-name}-es-http.${var.namespace}.svc.cluster.local"
+  value = "${var.es-name}-es-http.${var.namespace}"
 }
 
 output "es-url-internal"{
-  value = "https://${var.es-name}-es-http.${var.namespace}.svc.cluster.local:9200"
+  value = "https://${var.es-name}-es-http.${var.namespace}:9200"
 }
 
 output "kb-dns-internal"{
-  value = "${var.kibana-name}-kb-http.${var.namespace}.svc.cluster.local"
+  value = "${var.kibana-name}-kb-http.${var.namespace}"
 }
 
 output "kb-url-internal"{
-  value = "https://${var.kibana-name}-kb-http.${var.namespace}.svc.cluster.local:5601"
+  value = "https://${var.kibana-name}-kb-http.${var.namespace}:5601"
 }
