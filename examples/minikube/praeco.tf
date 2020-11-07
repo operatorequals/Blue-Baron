@@ -2,7 +2,7 @@ module "praeco"{
   source = "../../modules/praeco"
 
   namespace = var.siem-ns
-  values-file = "examples/minikube/praeco.values.yaml"
+  values-file = "examples/minikube/helm-values/praeco.yaml"
 
   es_host = module.elastic-cluster.es-dns-internal
 
