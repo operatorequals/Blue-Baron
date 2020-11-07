@@ -1,7 +1,7 @@
 module "mongodb"{
   source = "../../modules/mongodb"
 
-  namespace = "default"
+  namespace = var.siem-ns
   values-file = "examples/minikube/mongodb.values.yaml"
 }
 

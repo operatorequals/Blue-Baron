@@ -1,7 +1,7 @@
 module "elastic-cluster"{
   source = "../../modules/elastic-cluster"
 
-  namespace = "default"
+  namespace = var.siem-ns
   values-file = "examples/minikube/es-cluster.values.yaml"
 
   es-name = "cluster"

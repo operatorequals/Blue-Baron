@@ -1,7 +1,7 @@
 module "ingester" {
   source = "../../modules/ingester"
 
-  namespace = "default"
+  namespace = var.siem-ns
   values-file = "examples/minikube/ingester.values.yaml"
 
   es_host = module.elastic-cluster.es-dns-internal

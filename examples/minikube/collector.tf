@@ -1,7 +1,7 @@
 module "collector" {
   source = "../../modules/collector"
 
-  namespace = "default"
+  namespace = var.audit-ns
   values-file = "examples/minikube/collector.values.yaml"
 
   environment = {
