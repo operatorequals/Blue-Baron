@@ -27,15 +27,15 @@ elasticsearch:
   ingress:
     enabled: false
     annotations:
+    # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#backend-protocol
+    # https://stackoverflow.com/questions/54459015/how-to-configure-ingress-to-direct-traffic-to-an-https-backend-using-https
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    hosts:  
-    - name: elastic.bluebaron.local
-      path: "/"
-    tls:
-    - hosts:
-      - elastic.bluebaron.local
-      secretName: es-http-ca-internal    
+    # For Traeffik see: https://doc.traefik.io/traefik/v2.3/routing/providers/kubernetes-ingress/#communication-between-traefik-and-pods
+    # hosts:  
+    # - name: "es.bluebaron.local"
+    #   path: "/"
+    tls: []
 # ----
 kibana:
   name: ""
@@ -54,10 +54,8 @@ kibana:
     annotations:
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    hosts:
-    - name: kibana.bluebaron.local
-      path: "/"
-    tls:
-    - hosts:
-      - kibana.bluebaron.local
-      secretName: kibana-kb-http-ca-internal
+    # hosts:
+    # - name: ""
+    #   path: "/"
+    tls: []
+
