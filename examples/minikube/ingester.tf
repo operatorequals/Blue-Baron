@@ -18,7 +18,9 @@ module "ingester" {
   # the used docker image "operatorequals/fluentd-elasticsearch:2.4.0-mongo"
   # 
   #   https://github.com/fluent/fluent-plugin-mongo/issues/149
-  fluentd_plugin_list = []
+  fluentd_plugin_list = [
+    "fluent-plugin-rename-key"
+  ]
 
   environment = {
     MONGODB_USERNAME = "baron",
@@ -49,6 +51,20 @@ module "ingester" {
   # Convert ObjectId to string
   object_id_keys ["id_key"]
 </source>
+<filter **>
+  @type rename_key
+
+  # BSON records which include '.' or start with '$' are invalid 
+  # and they will be stored as broken data to MongoDB.
+  # These rules revert sanitization done by the Collector.
+  
+  rename_rule1 ^__dollar__(.+) $$${md[1]}
+  rename_rule2 ^__dot__(.+) .$${md[1]}
+</filter>
+<filter **>
+  @type rename_key
+  rename_rule1 (.+)__dot__(.+) $${md[1]}.$${md[2]}
+</filter>
 EOF
   }
 
