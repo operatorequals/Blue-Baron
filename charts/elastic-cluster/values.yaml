@@ -1,11 +1,11 @@
 # ----
 elasticsearch:
-  name: elasticsearch
+  name: "elasticsearch"
   version: 7.9.0
   nodeSets:
     - name: nset1
       count: 1
-      mmap: 
+      mmap:
         vm_max_map_count: 262144
         enabled: false
       roles:
@@ -22,11 +22,27 @@ elasticsearch:
         size: 512Mi
   service:
     enabled: true
-    type: LoadBalancer
+    type: ClusterIP
     # name: elastisearch
+  ingress:
+    enabled: false
+    annotations:
+    # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#backend-protocol
+    # https://stackoverflow.com/questions/54459015/how-to-configure-ingress-to-direct-traffic-to-an-https-backend-using-https
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # For Traeffik see: https://doc.traefik.io/traefik/v2.3/routing/providers/kubernetes-ingress/#communication-between-traefik-and-pods
+    # # If 'hosts' is commented out, default ingress is created
+    # hosts:
+    # - name: elasticsearch.bluebaron.local
+    #   path: "/"
+
+    # # tls is handled automatically if 'tls' is empty
+    # tls: []
+
 # ----
 kibana:
-  name: kibana
+  name: "kibana"
   version: 7.9.0
   # To increase "count" - 'xpack.encryptedSavedObjects.encryptionKey' needs to be set
   count: 1
@@ -37,3 +53,15 @@ kibana:
   limits:
     cpu: 0.5
     memory: 1Gi
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # # If 'hosts' is commented out, default ingress is created
+    # hosts:
+    # - name: kibana.bluebaron.local
+    #   path: "/"
+
+    # # tls is handled automatically if 'tls' is empty
+    # tls: []

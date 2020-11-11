@@ -5,5 +5,17 @@ echo elastic:$(kubectl get secrets {{ .Values.elasticsearch.name }}-es-elastic-u
 curl -u "elastic:$(kubectl get secrets {{ .Values.elasticsearch.name }}-es-elastic-user -o json | jq -r .data.elastic | base64 --decode)" https://127.0.0.1:9200 -k
 
 3. Port-forward Kibana service
-kubectl port-forward svc/{{ .Values.kibana.name }}-kb-http 5601
+kubectl port-forward svc/{{ .Values.kibana.name }}-kb-http 5601 &
 curl https://127.0.0.1:5601 -k
+{{ if (or .Values.elasticsearch.ingress.enabled .Values.kibana.ingress.enabled) }}
+4. Access the Ingresses
+{{- end }}
+{{- if .Values.elasticsearch.ingress.enabled }}
+* Elasticsearch Ingress
+kubectl get ingress {{ printf "%s-ingress" .Values.elasticsearch.name }} -o json | jq .spec.rules[].host -r
+{{- end }}
+{{ if .Values.kibana.ingress.enabled }}
+* Kibana Ingress
+kubectl get ingress {{ printf "%s-ingress" .Values.kibana.name }} -o json | jq .spec.rules[].host -r
+{{- end }}
+

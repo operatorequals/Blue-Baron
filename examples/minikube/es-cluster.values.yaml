@@ -24,6 +24,18 @@ elasticsearch:
     enabled: true
     type: ClusterIP
     # name: elastisearch
+  ingress:
+    enabled: false
+    annotations:
+    # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/#backend-protocol
+    # https://stackoverflow.com/questions/54459015/how-to-configure-ingress-to-direct-traffic-to-an-https-backend-using-https
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # For Traeffik see: https://doc.traefik.io/traefik/v2.3/routing/providers/kubernetes-ingress/#communication-between-traefik-and-pods
+    # hosts:  
+    # - name: "es.bluebaron.local"
+    #   path: "/"
+    tls: []
 # ----
 kibana:
   name: ""
@@ -37,3 +49,13 @@ kibana:
   limits:
     cpu: 0.5
     memory: 1Gi
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # hosts:
+    # - name: ""
+    #   path: "/"
+    tls: []
+
