@@ -7,5 +7,5 @@ output "mongodb-svc-dns"{
 }
 
 output "mongodb-secret"{
-  value = "${helm_release.mongodb.name}"
+  value = helm_release.mongodb.name
 }
