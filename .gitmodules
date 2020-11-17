@@ -1,0 +1,6 @@
+[submodule "charts/elastalert-server"]
+	path = charts/elastalert-server
+	url = https://github.com/operatorequals/elastalert-helm.git
+[submodule "charts/praeco"]
+	path = charts/praeco
+	url = https://github.com/operatorequals/praeco-helm.git
