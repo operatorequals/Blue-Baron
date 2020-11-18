@@ -1,6 +1,6 @@
 # Setup
 
-**Blue Baron works with Terraform version 0.12.x or newer.** 
+**Blue Baron works with Terraform version 0.13.x or newer.** 
 
 ### Elastic on Cloud Kubernetes (ECK) - Operator
 
