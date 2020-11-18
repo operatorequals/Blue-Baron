@@ -22,7 +22,7 @@ The name and the artwork are based on [byt3bl33d3rs' *Red-Baron*](https://github
 
 # Setup
 
-**Blue Baron works with Terraform version 0.12.x or newer.** 
+**Blue Baron works with Terraform version 0.13.x or newer.** 
 
 ### Elastic on Cloud Kubernetes (ECK) - Operator
 ECK operator is the first step to set up Blue Baron infrastructure.
