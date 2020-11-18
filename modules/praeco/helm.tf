@@ -36,5 +36,5 @@ resource "helm_release" "praeco" {
     value = data.kubernetes_secret.es_credentials_k8s_secret.data["${var.es_username}"]
   }
 
-
+  depends_on = [data.kubernetes_secret.es_credentials_k8s_secret]
 }
