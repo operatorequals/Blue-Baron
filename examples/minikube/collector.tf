@@ -9,6 +9,10 @@ module "collector" {
     MONGODB_PASSWORD = data.kubernetes_secret.mongodb.data.mongodb-password,
   }
 
+  fluentd_plugin_list = [
+    "fluent-plugin-beats",
+    ]
+
   fluentd_configs = {
     mongo-match = <<EOF
 <match **>
@@ -25,6 +29,12 @@ module "collector" {
   
   capped
   capped_size 100m
+
+  # BSON records which include '.' or start with '$' are invalid 
+  # and they will be stored as broken data to MongoDB.
+
+  replace_dot_in_key_with __dot__
+  replace_dollar_in_key_with __dollar__
 
 </match>
 EOF

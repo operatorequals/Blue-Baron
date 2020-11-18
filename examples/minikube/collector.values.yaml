@@ -41,7 +41,7 @@ extraEnvVars: []
 
 plugins:
   enabled: true
-  pluginsList: ["fluent-plugin-beats"]
+  pluginsList: []
 
 service:
   annotations: {}
