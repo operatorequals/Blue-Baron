@@ -33,7 +33,7 @@ resource "helm_release" "praeco" {
 
   set_sensitive {
     name  = "elastalert-server.elasticsearch.password"
-    value = data.kubernetes_secret.es_credentials_k8s_secret.data["${var.es_username}"]
+    value = data.kubernetes_secret.es_credentials_k8s_secret.data[var.es_username]
   }
 
 
