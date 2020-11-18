@@ -9,5 +9,7 @@ module "praeco"{
   es_username = "elastic"
   es_credentials_k8s_secret = module.elastic-cluster.es-user-secret
   es_tls_k8s_secret = module.elastic-cluster.es-certs
+
+  depends_on = [module.elastic-cluster]
 }
 
