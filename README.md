@@ -41,7 +41,7 @@ helm install elastic-operator cloud-on-k8s/deploy/eck-operator -n elastic-system
 ```
 
 *After installing ECK*, navigate under `examples/` for instructions on deploying Blue-Baron environments on:
-* [Bare-Metal](https://github.com/operatorequals/Blue-Baron/tree/main/examples/minikube)
+* [Bare-Metal](https://github.com/operatorequals/Blue-Baron/tree/main/examples/bare-metal)
 * AWS ([TBD](https://github.com/operatorequals/Blue-Baron/projects/1))
 * Azure ([TBD](https://github.com/operatorequals/Blue-Baron/projects/3))
 

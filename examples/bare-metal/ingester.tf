@@ -2,7 +2,7 @@ module "ingester-auditbeat" {
   source = "../../modules/ingester"
 
   namespace = var.siem-ns
-  values-file = "examples/minikube/helm-values/ingester.yaml"
+  values-file = "examples/bare-metal/helm-values/ingester.yaml"
 
   es_host = module.elastic-cluster.es-dns-internal
 
