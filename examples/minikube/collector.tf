@@ -22,7 +22,7 @@ module "collector" {
   host "${module.mongodb.mongodb-svc-dns}"
   port 27017
 
-  collection capped_log
+  tag_mapped
 
   user     "#{ENV['MONGODB_USERNAME']}"
   password "#{ENV['MONGODB_PASSWORD']}"
