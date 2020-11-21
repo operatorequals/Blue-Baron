@@ -1,5 +1,5 @@
 resource "helm_release" "fluentd-in" {
-  name      = "fluentd-in-${var.log_source}"
+  name      = "fluentd-ingester-${var.log_source}"
   chart     = "fluentd"
   repository = "https://charts.helm.sh/stable"
   namespace = var.namespace
