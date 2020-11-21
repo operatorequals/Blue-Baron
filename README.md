@@ -40,6 +40,12 @@ git clone https://github.com/elastic/cloud-on-k8s/
 helm install elastic-operator cloud-on-k8s/deploy/eck-operator -n elastic-system --create-namespace 
 ```
 
+*After installing ECK*, navigate under `examples/` for instructions on deploying Blue-Baron environments on:
+* [Bare-Metal](https://github.com/operatorequals/Blue-Baron/tree/main/examples/minikube)
+* AWS ([TBD](https://github.com/operatorequals/Blue-Baron/projects/1))
+* Azure ([TBD](https://github.com/operatorequals/Blue-Baron/projects/3))
+
+
 # License
 
 The Blue Baron repository is licensed under the GNU General Public License v3.0.
