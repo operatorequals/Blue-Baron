@@ -1,4 +1,4 @@
-module "ingester" {
+module "ingester-auditbeat" {
   source = "../../modules/ingester"
 
   namespace = var.siem-ns
@@ -7,7 +7,7 @@ module "ingester" {
   es_host = module.elastic-cluster.es-dns-internal
   es_index = "logstash-mongo"
 
-  log_source = "test"
+  log_source = "auditbeat"
 
   es_username = "elastic"
   es_credentials_k8s_secret = module.elastic-cluster.es-user-secret
@@ -33,14 +33,14 @@ module "ingester" {
   @type mongo_tail
 
   database fluent
-  collection capped_log
+  collection auditbeat
   host "${module.mongodb.mongodb-svc-dns}"
   port 27017
 
   user     "#{ENV['MONGODB_USERNAME']}"
   password "#{ENV['MONGODB_PASSWORD']}"
 
-  tag app.mongo_log
+  tag auditbeat
 
   # waiting time when there is no next document. default is 1s.
   wait_time 5
