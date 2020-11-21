@@ -19,7 +19,7 @@ After [installing ECK](https://github.com/operatorequals/Blue-Baron#eck-installa
 git clone https://github.com/operatorequals/Blue-Baron && cd Blue-Baron
 
 # Navigate to an example and modify it to the needs
-cd examples/minikube/
+cd examples/bare-metal/
 subl .
 
 # Check the set Kubernetes Context

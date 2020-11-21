@@ -2,7 +2,7 @@ module "mongodb"{
   source = "../../modules/mongodb"
 
   namespace = var.siem-ns
-  values-file = "examples/minikube/helm-values/mongodb.yaml"
+  values-file = "examples/bare-metal/helm-values/mongodb.yaml"
 }
 
 output "mongodb-secret" {
