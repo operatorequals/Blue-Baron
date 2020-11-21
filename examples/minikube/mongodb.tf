@@ -1,8 +1,8 @@
 module "mongodb"{
   source = "../../modules/mongodb"
 
-  namespace = "default"
-  values-file = "examples/minikube/mongodb.values.yaml"
+  namespace = var.siem-ns
+  values-file = "examples/minikube/helm-values/mongodb.yaml"
 }
 
 output "mongodb-secret" {

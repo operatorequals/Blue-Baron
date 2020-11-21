@@ -1,8 +1,8 @@
 module "collector" {
   source = "../../modules/collector"
 
-  namespace = "default"
-  values-file = "examples/minikube/collector.values.yaml"
+  namespace = var.audit-ns
+  values-file = "examples/minikube/helm-values/collector.yaml"
 
   environment = {
     MONGODB_USERNAME = "baron",

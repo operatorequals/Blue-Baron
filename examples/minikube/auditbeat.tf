@@ -1,7 +1,7 @@
 module "auditbeat" {
   source = "../../modules/auditbeat"
 
-  namespace = "default"
+  namespace = var.audit-ns
 
   collector-url = module.collector.collector_beats_url
 }

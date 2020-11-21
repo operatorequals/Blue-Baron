@@ -1,8 +1,8 @@
 module "ingester" {
   source = "../../modules/ingester"
 
-  namespace = "default"
-  values-file = "examples/minikube/ingester.values.yaml"
+  namespace = var.siem-ns
+  values-file = "examples/minikube/helm-values/ingester.yaml"
 
   es_host = module.elastic-cluster.es-dns-internal
   es_index = "logstash-mongo"
