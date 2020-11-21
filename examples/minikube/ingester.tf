@@ -5,7 +5,6 @@ module "ingester-auditbeat" {
   values-file = "examples/minikube/helm-values/ingester.yaml"
 
   es_host = module.elastic-cluster.es-dns-internal
-  es_index = "logstash-mongo"
 
   log_source = "auditbeat"
 

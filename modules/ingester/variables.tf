@@ -9,10 +9,6 @@ variable "values-file" {
 variable es_host {
 }
 
-variable es_index {
-  default = ""
-}
-
 variable es_credentials_k8s_secret {
 }
 
