@@ -13,7 +13,7 @@ or Production-Ready [K3s](https://github.com/rancher/k3s), [kOps](https://github
 
 After [installing ECK](https://github.com/operatorequals/Blue-Baron#eck-installation) the deployment process goes as below.
 
-### Deployment
+### Configure
 
 ```bash
 git clone https://github.com/operatorequals/Blue-Baron && cd Blue-Baron
@@ -24,7 +24,21 @@ subl .
 
 # Check the set Kubernetes Context
 kubectl config get-contexts
+```
 
+### Alerting
+
+To enable Slack Alerts create a [Slack App](https://api.slack.com/apps) and add the desired [Web Hook](https://slack.com/intl/en-gr/help/articles/115005265063-Incoming-webhooks-for-Slack). Configure Elastalert Server to use the newly created Web Hook, by overwriting the default one under `examples/bare-metal/helm-values/praeco.yaml`.
+
+```yaml
+baserule: |-
+  slack_emoji_override: ':postal_horn:'
+  slack_webhook_url: https://hooks.slack.com/services/XX/XXX/XXXX
+```
+
+### Deployment
+
+```bash
 # Use terraform to deploy Blue-Baron
 terraform init
 terraform apply

@@ -25,7 +25,12 @@ elastalert-server:
   # extraVolumeMounts: []
 
   rules: {}
-
+  # The YAML definitions above will form the BaseRule.config,
+  # and will be stored in a Kubernetes Secret
+  baserule: |-
+    slack_emoji_override: ':postal_horn:'
+    slack_webhook_url: https://hooks.slack.com/services/XX/XXX/XXXX
+    
 praeco:
   schema: https
   external_host: praeco.bluebaron.local
