@@ -6,6 +6,7 @@ resource "helm_release" "praeco" {
   # version   = "9.3.0"
   create_namespace = true
   dependency_update = true  # To use the `elastalert-server` Helm Chart
+  recreate_pods = true
   
   values = [
     file("${path.module}/../../${var.values-file}")
