@@ -1,9 +1,8 @@
 resource "helm_release" "praeco" {
   name      = "praeco"
   chart = "praeco"
-  repository = "../../charts/"
+  repository = "https://operatorequals.github.io/helm-chart"
   namespace = var.namespace
-  # version   = "9.3.0"
   create_namespace = true
   dependency_update = true  # To use the `elastalert-server` Helm Chart
   recreate_pods = true
