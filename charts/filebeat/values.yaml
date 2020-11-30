@@ -141,7 +141,8 @@ secretMounts: []
 # How long to wait for Filebeat pods to stop gracefully
 terminationGracePeriod: 30
 
-tolerations: []
+tolerations:
+  - operator: Exists
 
 nodeSelector: {}
 
