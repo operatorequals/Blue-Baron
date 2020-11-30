@@ -1,21 +1,50 @@
 1. Get ElasticSearch Cluster Credentials with the below command:
-echo elastic:$(kubectl get secrets {{ .Values.elasticsearch.name }}-es-elastic-user -o json | jq -r .data.elastic | base64 --decode)
+echo elastic:$(kubectl get secrets {{ .Values.elasticsearch.name }}-es-elastic-user -n {{ .Release.Namespace }} -o json | jq -r .data.elastic | base64 --decode)
 
 2. Create an "Authorization: Basic [...]" header:
-curl -u "elastic:$(kubectl get secrets {{ .Values.elasticsearch.name }}-es-elastic-user -o json | jq -r .data.elastic | base64 --decode)" https://127.0.0.1:9200 -k
+curl -u "elastic:$(kubectl get secrets {{ .Values.elasticsearch.name }}-es-elastic-user -n {{ .Release.Namespace }}-o json | jq -r .data.elastic | base64 --decode)" https://127.0.0.1:9200 -k
 
-3. Port-forward Kibana service
-kubectl port-forward svc/{{ .Values.kibana.name }}-kb-http 5601 &
+3. Port-forward Kibana service:
+kubectl port-forward  -n {{ .Release.Namespace }} svc/{{ .Values.kibana.name }}-kb-http 5601 &
 curl https://127.0.0.1:5601 -k
+
 {{ if (or .Values.elasticsearch.ingress.enabled .Values.kibana.ingress.enabled) }}
-4. Access the Ingresses
+4. Access the Ingresses:
 {{- end }}
 {{- if .Values.elasticsearch.ingress.enabled }}
-* Elasticsearch Ingress
-kubectl get ingress {{ printf "%s-ingress" .Values.elasticsearch.name }} -o json | jq .spec.rules[].host -r
+* Elasticsearch Ingress:
+kubectl get ingress -n {{ .Release.Namespace }} {{ printf "%s-ingress" .Values.elasticsearch.name }} -o json | jq .spec.rules[].host -r
 {{- end }}
 {{ if .Values.kibana.ingress.enabled }}
-* Kibana Ingress
-kubectl get ingress {{ printf "%s-ingress" .Values.kibana.name }} -o json | jq .spec.rules[].host -r
+* Kibana Ingress:
+kubectl get ingress -n {{ .Release.Namespace }} {{ printf "%s-ingress" .Values.kibana.name }} -o json | jq .spec.rules[].host -r
 {{- end }}
+
+5. Create ".detection-rules-cfg.json" file for Elastic SIEM ruleset intergration
+----
+git clone https://github.com/elastic/detection-rules && cd detection-rules
+----
+----
+echo {\"debug\":false, \
+{{- if .Values.elasticsearch.ingress.enabled }}
+\"elasticsearch_url\":\"http://$(kubectl get ingress -n {{ .Release.Namespace }} {{ printf "%s-ingress" .Values.elasticsearch.name }} -o json | jq .spec.rules[].host -r)\", \
+{{- end }}
+{{- if .Values.kibana.ingress.enabled }}
+\"kibana_url\":\"http://$(kubectl get ingress -n {{ .Release.Namespace }} {{ printf "%s-ingress" .Values.kibana.name }} -o json | jq .spec.rules[].host -r)\", \
+{{- end }}
+\"es_user\":\"elastic\", \
+\"kibana_user\":\"elastic\", \
+\"es_password\":\"$(kubectl get secrets {{ .Values.elasticsearch.name }}-es-elastic-user -n {{ .Release.Namespace }} -o json | jq -r .data.elastic | base64 --decode)\", \
+\"kibana_password\":\"$(kubectl get secrets {{ .Values.elasticsearch.name }}-es-elastic-user -n {{ .Release.Namespace }} -o json | jq -r .data.elastic | base64 --decode)\" \
+} > .detection-rules-cfg.json
+----
+
+----
+pip install -r requirements.txt
+python -m detection_rules kibana upload-rule rules/
+----
+
+
+[1] :https://github.com/elastic/detection-rules/blob/main/CLI.md
+
 
