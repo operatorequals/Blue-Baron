@@ -18,6 +18,10 @@ output "es-url-internal"{
   value = "https://${var.es-name}-es-http.${var.namespace}:9200"
 }
 
+output "kb-certs" {
+  value = "${var.kibana-name}-kb-http-certs-internal"
+}
+
 output "kb-dns-internal"{
   value = "${var.kibana-name}-kb-http.${var.namespace}"
 }
