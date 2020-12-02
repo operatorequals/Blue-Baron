@@ -94,8 +94,6 @@ config:
   output.elasticsearch:
     enabled: false
 
-  setup.dashboards.enabled: true
-  
   setup.kibana:
     host: ""
     protocol: https
