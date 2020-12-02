@@ -91,6 +91,20 @@ config:
     pipelining: 0
     ttl: 120
 
+  output.elasticsearch:
+    enabled: false
+
+  setup.dashboards.enabled: true
+  
+  setup.kibana:
+    host: ""
+    protocol: https
+    username: ""
+    password: ""
+    ssl:
+      enabled: true
+      certificate_authorities: ["/certs/ca.crt"]
+
 # List of beat plugins
 plugins: []
   # - kinesis.so
@@ -102,17 +116,18 @@ extraArgs: []
 
 # A map of additional environment variables
 extraVars: {}
-  # test1: "test2"
-
 # Add additional volumes and mounts, for example to read other log files on the host
-extraVolumes: []
-  # - hostPath:
-  #     path: /var/log
-  #   name: varlog
-extraVolumeMounts: []
-  # - name: varlog
-  #   mountPath: /host/var/log
-  #   readOnly: true
+# Extra Environment Values - allows yaml definitions
+extraVolumes:
+  - name: kb-certs
+    secret:
+      defaultMode: 420
+      secretName: ""
+
+extraVolumeMounts:
+  - name: kb-certs
+    mountPath: /certs
+    readOnly: true
 
 ## Labels to be added to pods
 podLabels: {}
