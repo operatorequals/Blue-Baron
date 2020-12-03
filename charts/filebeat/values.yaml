@@ -27,6 +27,17 @@ filebeatConfig:
       pipelining: 0
       ttl: 120
 
+    setup.dashboards.enabled: true
+
+    setup.kibana:
+      host: ${KB_HOSTNAME}
+      protocol: https
+      username: ${ES_USERNAME}
+      password: ${ES_PASSWORD}
+      ssl:
+        enabled: true
+        certificate_authorities: ["/certs/ca.crt"]
+
     processors:
     - add_cloud_metadata: null
     - add_docker_metadata: null
@@ -38,14 +49,16 @@ extraEnvs: []
 #  - name: MY_ENVIRONMENT_VAR
 #    value: the_value_goes_here
 
-extraVolumeMounts: []
-  # - name: extras
-  #   mountPath: /usr/share/extras
-  #   readOnly: true
+extraVolumeMounts:
+  - name: kb-certs
+    mountPath: /certs
+    readOnly: true
 
-extraVolumes: []
-  # - name: extras
-  #   emptyDir: {}
+extraVolumes:
+  - name: kb-certs
+    secret:
+      defaultMode: 420
+      secretName: ""
 
 extraContainers: ""
 # - name: dummy-init
