@@ -1,12 +1,12 @@
 variable resource_group_name {
-    default = "bluebaron"
+    default = "bluebaronrg"
 }
 
 variable location {
     default = "westeurope"
 }
 
-variable storage_account_name {
+variable storage_account {
     default = "bluebaron"
 }
 

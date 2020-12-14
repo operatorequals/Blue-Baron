@@ -3,7 +3,7 @@ variable subscription_id {
 }
 
 variable resource_group_name {
-    default = "bluebaron"
+    default = "bluebaronrg"
 }
 
 variable location {
@@ -25,13 +25,13 @@ variable diagnostic_name {
 variable activity_logs {
     default = [
     # ["Audit category name",  "Audit enabled)"] 
-            ["Administrative", true],
-            ["Security", true],
-            ["ServiceHealth", true],
-            ["Alert", true],
-            ["Recommendation", true],
-            ["Policy", true],
-            ["Autoscale", true],
-            ["ResourceHealth", true],
-        ]
+        ["Administrative", true],
+        ["Security", true],
+        ["ServiceHealth", true],
+        ["Alert", true],
+        ["Recommendation", true],
+        ["Policy", true],
+        ["Autoscale", true],
+        ["ResourceHealth", true],
+    ]
 }
