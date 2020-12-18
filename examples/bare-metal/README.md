@@ -11,7 +11,7 @@ or Production-Ready [K3s](https://github.com/rancher/k3s), [kOps](https://github
 
 ## Setup
 
-After [installing ECK](https://github.com/operatorequals/Blue-Baron#eck-installation) the deployment process goes as below.
+The deployment process consists of Terraform and Helm `values.yaml` configuration.
 
 ### Configure
 
