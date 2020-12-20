@@ -1,5 +1,5 @@
 variable name {
-    default = "bluebaronrg"
+    default = "bluebaron"
 }
 
 variable location {
