@@ -7,8 +7,10 @@ resource "azurerm_storage_account" "bluebaron" {
   account_tier = "Standard"
   account_replication_type = "LRS"
 
+
   tags = {
-    environment = "Blue Baron"
+    Environment = "Blue-Baron"
+    Project     = "https://github.com/operatorequals/Blue-Baron"
   }
 }
 
