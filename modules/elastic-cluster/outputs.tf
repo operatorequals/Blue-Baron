@@ -10,6 +10,10 @@ output "es-certs"{
   value = "${var.es-name}-es-http-certs-internal"
 }
 
+output "kb-certs"{
+  value = "${var.kibana-name}-kb-http-certs-internal"
+}
+
 output "es-dns-internal"{
   value = "${var.es-name}-es-http.${var.namespace}"
 }
