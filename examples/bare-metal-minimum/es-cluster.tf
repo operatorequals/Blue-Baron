@@ -6,6 +6,8 @@ module "elastic-cluster"{
 
   es-name = "cluster"
   kibana-name = "siem"
+
+  depends_on = [module.eck-operator]
 }
 
 output "elastic-cluster-user-secret" {
