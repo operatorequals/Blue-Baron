@@ -1,3 +1,7 @@
+variable "chart"{
+  default = "../../charts/elastic-cluster"
+}
+
 variable "namespace" {}
 
 variable "values-file" {

@@ -1,6 +1,6 @@
 resource "helm_release" "elastic-cluster" {
   name      = "es-cluster"
-  chart     = "../../charts/elastic-cluster"
+  chart     = var.chart
   namespace = var.namespace
   version   = "0.1.0"
   create_namespace = true
