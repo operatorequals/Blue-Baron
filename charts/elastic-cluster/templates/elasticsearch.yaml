@@ -20,14 +20,23 @@ spec:
           # additional labels for pods
           foo: bar
       spec:
-        {{- if $nset.mmap.enabled }}
+        {{- if (or $nset.mmap.enabled $nset.plugins) }}
         initContainers:
+        {{- end }}
+        {{- if $nset.mmap.enabled }}
         - name: sysctl
           securityContext:
             privileged: true
           command: ['sh', '-c', 'sysctl -w vm.max_map_count={{ $nset.mmap.vm_max_map_count | default 262144 }}']
         {{- end }}
-
+        {{- if $nset.plugins }}
+        - name: install-plugins
+          command:
+          - sh
+          - -c
+          - |
+            bin/elasticsearch-plugin install --batch {{- printf " %s" (join " " $nset.plugins) -}}
+        {{- end }}
         # uncomment the line below if you are using a service mesh such as linkerd2 that uses service account tokens for pod identification.
         # automountServiceAccountToken: true
         containers:

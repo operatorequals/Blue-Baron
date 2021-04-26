@@ -4,6 +4,7 @@ elasticsearch:
   version: 7.9.0
   nodeSets:
     - name: nset1
+      plugins: []
       count: 1
       mmap:
         vm_max_map_count: 262144
