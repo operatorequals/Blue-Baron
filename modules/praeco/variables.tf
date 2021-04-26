@@ -17,3 +17,8 @@ variable es_tls_k8s_secret {
 
 variable es_credentials_k8s_secret {
 }
+
+variable ingress-annotations {
+  default = {}
+}
+

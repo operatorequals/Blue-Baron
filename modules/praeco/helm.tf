@@ -36,5 +36,15 @@ resource "helm_release" "praeco" {
     value = data.kubernetes_secret.es_credentials_k8s_secret.data[var.es_username]
   }
 
+  dynamic set {
+    for_each = var.ingress-annotations
+    content {
+      name  = "ingress.annotations.${set.key}"
+      value = "${set.value}"
+    }
+  }
+
+
   depends_on = [data.kubernetes_secret.es_credentials_k8s_secret]
 }
+
