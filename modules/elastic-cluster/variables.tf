@@ -17,3 +17,12 @@ variable es-name {
 variable kibana-name {
   default = "kib"
 }
+
+variable es-ingress-annotations {
+  default = {}
+}
+
+variable kibana-ingress-annotations {
+  default = {}
+}
+

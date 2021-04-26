@@ -19,4 +19,31 @@ resource "helm_release" "elastic-cluster" {
     value = var.kibana-name
   }
 
+  set {
+    name  = "elasticsearch.ingress.enabled"
+    value = length(var.es-ingress-annotations) > 0 ? true : false
+  }
+
+  set {
+    name  = "kibana.ingress.enabled"
+    value = length(var.kibana-ingress-annotations) > 0 ? true : false
+  }
+
+  dynamic set {
+    for_each = var.es-ingress-annotations
+    content {
+      name  = "elasticsearch.ingress.annotations.${set.key}"
+      value = set.value
+    }
+  }
+
+  dynamic set {
+    for_each = var.kibana-ingress-annotations
+    content {
+      name  = "kibana.ingress.annotations.${set.key}"
+      value = set.value
+    }
+  }
+
 }
+
