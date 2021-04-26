@@ -32,3 +32,11 @@ variable kibana-ingress-annotations {
   }
 }
 
+variable es-ingress-hostname {
+  default = "elasticsearch.bluebaron.local"
+}
+
+variable kibana-ingress-hostname {
+  default = "kibana.bluebaron.local"
+}
+

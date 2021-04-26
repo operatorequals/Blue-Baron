@@ -45,5 +45,15 @@ resource "helm_release" "elastic-cluster" {
     }
   }
 
+  set {
+    name  = "elasticsearch.ingress.hosts[0].name"
+    value = var.es-ingress-hostname
+  }
+
+  set {
+    name  = "kibana.ingress.hosts[0].name"
+    value = var.kibana-ingress-hostname
+  }
+
 }
 
