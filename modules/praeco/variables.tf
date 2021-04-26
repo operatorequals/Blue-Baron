@@ -22,3 +22,7 @@ variable ingress-annotations {
   default = {}
 }
 
+variable ingress-hostname {
+  default = "praeco.bluebaron.local"
+}
+

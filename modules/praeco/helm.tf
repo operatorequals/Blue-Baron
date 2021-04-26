@@ -44,6 +44,15 @@ resource "helm_release" "praeco" {
     }
   }
 
+  set {
+    name  = "ingress.hosts[0].host"
+    value = var.ingress-hostname
+  }
+
+  set {
+    name  = "praeco.external_host"
+    value = var.ingress-hostname
+  }
 
   depends_on = [data.kubernetes_secret.es_credentials_k8s_secret]
 }
