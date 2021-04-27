@@ -18,16 +18,19 @@ variable kibana-name {
   default = "kib"
 }
 
+variable cluster-version {
+}
+
 variable es-ingress-annotations {
   default = {
-  "nginx\\.ingress\\.kubernetes\\.io/backend-protocol" = "HTTPS",
+  "nginx\\.ingress\\.kubernetes\\.io/backend-protocol"  = "HTTPS",
   "nginx\\.ingres\\.kubernetes\\.io/force-ssl-redirect" = "true"
   }
 }
 
 variable kibana-ingress-annotations {
   default = {
-  "nginx\\.ingress\\.kubernetes\\.io/backend-protocol" = "HTTPS",
+  "nginx\\.ingress\\.kubernetes\\.io/backend-protocol"  = "HTTPS",
   "nginx\\.ingres\\.kubernetes\\.io/force-ssl-redirect" = "true"
   }
 }

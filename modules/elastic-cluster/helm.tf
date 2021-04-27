@@ -20,6 +20,16 @@ resource "helm_release" "elastic-cluster" {
   }
 
   set {
+    name  = "elasticsearch.version"
+    value = var.cluster-version
+  }
+
+  set {
+    name  = "kibana.version"
+    value = var.cluster-version
+  }
+
+  set {
     name  = "elasticsearch.ingress.enabled"
     value = length(var.es-ingress-annotations) > 0 ? true : false
   }
