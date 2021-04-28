@@ -106,4 +106,18 @@ resource "helm_release" "fluentd_out_es" {
     value = var.es_tls_k8s_secret
   }
 
+  set {
+    name  = "service.type"
+    value = var.service-type
+  }
+
+  dynamic set {
+    for_each = var.service-annotations
+    content {
+      name  = "service.annotations.${set.key}"
+      value = set.value
+    }
+  }
+
+
 }

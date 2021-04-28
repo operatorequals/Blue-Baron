@@ -34,3 +34,12 @@ variable pod_annotations {
 variable environment {
   default = {}
 }
+
+variable service-type {
+  default = "ClusterIP"
+}
+
+variable service-annotations {
+  default = {}
+}
+
