@@ -65,5 +65,44 @@ resource "helm_release" "elastic-cluster" {
     value = var.kibana-ingress-hostname
   }
 
+  dynamic set {
+    for_each = var.es-pod-annotations
+    content {
+      name  = "elasticsearch.podAnnotations.${set.key}"
+      value = set.value
+    }
+  }
+
+  dynamic set {
+    for_each = var.kibana-pod-annotations
+    content {
+      name  = "kibana.podAnnotations.${set.key}"
+      value = set.value
+    }
+  }
+
+  set {
+    name  = "elasticsearch.serviceAccount.name"
+    value = var.es-serviceaccount
+  }
+
+  set {
+    name  = "elasticsearch.serviceAccount.create"
+    value = var.es-serviceaccount != "" ? false : true
+  }
+
+
+  set {
+    name  = "kibana.serviceAccount.name"
+    value = var.kibana-serviceaccount
+  }
+
+  set {
+    name  = "kibana.serviceAccount.create"
+    value = var.kibana-serviceaccount != "" ? false : true
+  }
+
+
+
 }
 

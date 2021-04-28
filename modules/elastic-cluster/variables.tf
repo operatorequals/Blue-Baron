@@ -43,3 +43,19 @@ variable kibana-ingress-hostname {
   default = "kibana.bluebaron.local"
 }
 
+variable es-pod-annotations {
+  default = {}
+}
+
+variable kibana-pod-annotations {
+  default = {}
+}
+
+variable es-serviceaccount {
+  default = ""
+}
+
+variable kibana-serviceaccount {
+  default = ""
+}
+
