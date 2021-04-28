@@ -16,6 +16,7 @@ spec:
           limits:
             memory: {{ .Values.kibana.limits.memory }}
             cpu: {{ .Values.kibana.cpu }}
+      serviceAccountName: {{ include "elastic-cluster.elasticsearch.serviceAccountName" $ }}
   secureSettings:
     - secretName: {{ .Values.kibana.name }}-secret-settings
 {{ end }}

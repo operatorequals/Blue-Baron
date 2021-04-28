@@ -51,6 +51,7 @@ spec:
             value: "-Xms{{ $nset.heapSize | default 1024 }} -Xmx{{ $nset.heapSize | default 1024 }}"
     count: {{ $nset.count }}
     {{- if $nset.volumeClaims.enabled }}
+    serviceAccountName: {{ include "elastic-cluster.elasticsearch.serviceAccountName" $ }}
     volumeClaimTemplates:
       - metadata:
           name: elasticsearch-data
@@ -72,5 +73,5 @@ spec:
       {{- end }}
       spec:
         type: {{ .Values.elasticsearch.service.type }}
-
 {{ end }}
+

@@ -52,12 +52,24 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
 {{/*
-Create the name of the service account to use
+Create the name of the service account to use in elasticsearch
 */}}
-{{- define "elastic-cluster.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create -}}
-    {{ default (include "elastic-cluster.fullname" .) .Values.serviceAccount.name }}
+{{- define "elastic-cluster.elasticsearch.serviceAccountName" -}}
+{{- if .Values.elasticsearch.serviceAccount.create -}}
+    {{ default (include "elastic-cluster.fullname" .) .Values.elasticsearch.serviceAccount.name }}
 {{- else -}}
-    {{ default "default" .Values.serviceAccount.name }}
+    {{ default "default" .Values.elasticsearch.serviceAccount.name }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Create the name of the service account to use in kibana
+*/}}
+{{- define "elastic-cluster.kibana.serviceAccountName" -}}
+{{- if .Values.kibana.serviceAccount.create -}}
+    {{ default (printf "%s-kibana" (include "elastic-cluster.fullname" .)) .Values.kibana.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.kibana.serviceAccount.name }}
+{{- end -}}
+{{- end -}}
+

@@ -21,6 +21,13 @@ elasticsearch:
         enabled: true
         class: standard
         size: 512Mi
+  # This service account will be mount in all elasticsearch pods
+  serviceAccount:
+      # Specifies whether a service account should be created
+    create: true
+  #  name: ""
+  #  annotations: {}
+  automountServiceAccountToken: true
   service:
     enabled: true
     type: ClusterIP
@@ -66,3 +73,14 @@ kibana:
 
     # # tls is handled automatically if 'tls' is empty
     # tls: []
+
+
+  # This service account will be mount in all kibana pods
+  serviceAccount:
+      # Specifies whether a service account should be created
+    create: true
+  #  name: ""
+  #  annotations: {}
+  automountServiceAccountToken: true
+
+
