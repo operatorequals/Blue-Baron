@@ -9,6 +9,11 @@ spec:
   elasticsearchRef:
     name: {{ .Values.elasticsearch.name }}
   podTemplate:
+    metadata:
+      {{- if .Values.kibana.podAnnotations }}
+      annotations:
+{{ toYaml .Values.kibana.podAnnotations | indent 8 }}
+      {{- end }}
     spec:
       containers:
       - name: kibana

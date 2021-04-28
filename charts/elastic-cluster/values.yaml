@@ -21,6 +21,12 @@ elasticsearch:
         enabled: true
         class: standard
         size: 512Mi
+
+  # Annotations for Elasticsearch Pods, used by Cloud authenticators
+  # like Kube2IAM
+  podAnnotations: {}
+  #  iam.amazonaws.com/role: es-cluster
+
   # This service account will be mount in all elasticsearch pods
   serviceAccount:
       # Specifies whether a service account should be created
@@ -28,6 +34,7 @@ elasticsearch:
   #  name: ""
   #  annotations: {}
   automountServiceAccountToken: true
+
   service:
     enabled: true
     type: ClusterIP
@@ -73,6 +80,11 @@ kibana:
 
     # # tls is handled automatically if 'tls' is empty
     # tls: []
+
+  # Annotations for Kibana Pods, used by Cloud authenticators
+  # like Kube2IAM
+  podAnnotations: {}
+  #  iam.amazonaws.com/role: es-cluster
 
 
   # This service account will be mount in all kibana pods

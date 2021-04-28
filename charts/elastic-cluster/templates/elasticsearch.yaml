@@ -17,8 +17,11 @@ spec:
     podTemplate:
       metadata:
         labels:
-          # additional labels for pods
-          foo: bar
+          placeholder: "here"
+      {{- if $.Values.elasticsearch.podAnnotations }}
+        annotations:
+{{ toYaml .Values.elasticsearch.podAnnotations | indent 8 }}
+      {{- end }}
       spec:
         {{- if (or $nset.mmap.enabled $nset.plugins) }}
         initContainers:
