@@ -52,9 +52,9 @@ spec:
           env:
           - name: ES_JAVA_OPTS
             value: "-Xms{{ $nset.heapSize | default 1024 }} -Xmx{{ $nset.heapSize | default 1024 }}"
+        serviceAccountName: {{ include "elastic-cluster.elasticsearch.serviceAccountName" $ }}
     count: {{ $nset.count }}
     {{- if $nset.volumeClaims.enabled }}
-    serviceAccountName: {{ include "elastic-cluster.elasticsearch.serviceAccountName" $ }}
     volumeClaimTemplates:
       - metadata:
           name: elasticsearch-data
