@@ -1,0 +1,25 @@
+{{- if .Values.fleet.enabled -}}
+apiVersion: agent.k8s.elastic.co/v1alpha1
+kind: Agent
+metadata:
+  name: {{ .Values.fleet.name }}
+spec:
+  version: {{ .Values.fleet.version }}
+  mode: fleet
+  fleetServerEnabled: true
+  kibanaRef:
+    name: {{ .Values.kibana.name }}
+  elasticsearchRefs:
+  - name: {{ .Values.elasticsearch.name }}
+  deployment:
+    podTemplate:
+      spec:
+        serviceAccountName: {{ include "elastic-cluster.fleet.serviceAccountName" $ }}
+        securityContext:
+          runAsUser: 0
+        resources:
+          limits:
+            memory: {{ .Values.fleet.limits.memory }}
+            cpu: {{ .Values.fleet.limits.cpu }}
+{{- end -}}
+

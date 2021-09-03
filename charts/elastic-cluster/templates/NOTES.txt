@@ -18,4 +18,8 @@ kubectl get ingress {{ printf "%s-ingress" .Values.elasticsearch.name }} -o json
 * Kibana Ingress
 kubectl get ingress {{ printf "%s-ingress" .Values.kibana.name }} -o json | jq .spec.rules[].host -r
 {{- end }}
+{{ if .Values.fleet.ingress.enabled }}
+* Fleet Ingress
+kubectl get ingress {{ printf "%s-ingress" .Values.fleet.name }} -o json | jq .spec.rules[].host -r
+{{- end }}
 
