@@ -1,0 +1,55 @@
+{{- if .Values.fleet.ingress.enabled }}
+{{- $fleetName := .Values.fleet.name }}
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Values.fleet.name }}-ingress
+  annotations:
+    {{- range $index, $value := .Values.fleet.ingress.annotations}}
+    {{$index}}: "{{ $value }}" 
+    {{- end}}
+  labels:
+    app: {{ template "elastic-cluster.name" . }}
+    chart: {{ template "elastic-cluster.chart" . }}
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  rules:
+  {{- range $host := .Values.fleet.ingress.hosts }}
+  - host: {{ $host.name }}
+    http:
+      paths:
+      - path: {{ $host.path }}
+        backend:
+          serviceName: {{ $fleetName }}-agent-http
+          servicePort: 5601
+  {{- end }}
+  {{- if not .Values.fleet.ingress.hosts }}
+  - host: "{{ .Values.fleet.name }}.bluebaron.local"
+    http:
+      paths:
+      - path: "/"
+        backend:
+          serviceName: {{ $fleetName }}-agent-http
+          servicePort: 5601
+  {{- end }}
+  {{- if (hasKey .Values.fleet.ingress "tls") }}
+  tls:
+        {{- range .Values.fleet.ingress.tls }}
+    - hosts:
+          {{- range .hosts }}
+          - {{ . | quote }}
+          {{- end }}
+      secretName: {{ .secretName }}
+        {{- end }}
+
+    {{- if not .Values.fleet.ingress.tls }}
+      - hosts:
+        - "{{ .Values.fleet.name }}.bluebaron.local"
+        secretName: {{ .Values.fleet.name }}-fl-http-ca-public
+    {{- end }}
+  {{- else }}
+  # No TLS for the ingress
+  {{- end }}
+{{- end }}
+

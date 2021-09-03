@@ -1,7 +1,7 @@
 # ----
 elasticsearch:
   name: "elasticsearch"
-  version: 7.9.0
+  version: 7.14.0
   nodeSets:
     - name: nset1
       plugins: []
@@ -58,7 +58,7 @@ elasticsearch:
 # ----
 kibana:
   name: "kibana"
-  version: 7.9.0
+  version: 7.14.0
   # To increase "count" - 'xpack.encryptedSavedObjects.encryptionKey' needs to be set
   count: 1
   encryptionKey:
@@ -94,5 +94,41 @@ kibana:
   #  name: ""
   #  annotations: {}
   automountServiceAccountToken: true
+
+# ----
+fleet:
+  enabled: true
+  name: "fleet"
+  version: 7.14.0
+  count: 1
+  limits:
+    cpu: 0.5
+    memory: 512Mb
+  ingress:
+    enabled: true
+    annotations:
+      nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+      nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    # # If 'hosts' is commented out, default ingress is created
+    # hosts:
+    # - name: fleet.bluebaron.local
+    #   path: "/"
+
+    # # tls is handled automatically if 'tls' is empty
+    # tls: []
+
+  # Annotations for Fleet Pods, used by Cloud authenticators
+  # like Kube2IAM
+  podAnnotations: {}
+  #  iam.amazonaws.com/role: es-cluster
+
+
+  # This service account will be mount in all fleet pods
+  serviceAccount:
+      # Specifies whether a service account should be created
+    create: true
+  #  name: ""
+  #  annotations: {}
+  # automountServiceAccountToken: true
 
 

@@ -73,3 +73,14 @@ Create the name of the service account to use in kibana
 {{- end -}}
 {{- end -}}
 
+{{/*
+Create the name of the service account to use in fleet
+*/}}
+{{- define "elastic-cluster.fleet.serviceAccountName" -}}
+{{- if .Values.fleet.serviceAccount.create -}}
+    {{ default (printf "%s-fleet" (include "elastic-cluster.fullname" .)) .Values.fleet.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.fleet.serviceAccount.name }}
+{{- end -}}
+{{- end -}}
+

@@ -25,3 +25,9 @@ spec:
   secureSettings:
     - secretName: {{ .Values.kibana.name }}-kb-secret-config
 {{ end }}
+{{- if .Values.fleet.enabled }}
+  config:
+    xpack.fleet.agents.elasticsearch.host: "https://{{ .Values.elasticsearch.name }}-es-http.{{ .Release.Namespace }}.svc:9200"
+    xpack.fleet.agents.fleet_server.hosts: ["https://{{ .Values.fleet.name }}-agent-http.{{ .Release.Namespace }}.svc:8220"]
+{{- end -}}
+
