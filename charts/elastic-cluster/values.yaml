@@ -14,9 +14,9 @@ elasticsearch:
         - "data"
         - "ingest"
       limits:
-        cpu: 0.9
+        cpu: 1
         memory: 2Gi
-      heapSize: 1700m  # Use [m for Megabytes, g for gigabytes]
+      heapSize: 1200m  # Use [m for Megabytes, g for gigabytes]
       volumeClaims:
         enabled: true
         class: standard
@@ -66,7 +66,7 @@ kibana:
     # 'xpack.encryptedSavedObjects.encryptionKey' value:
     value: "" # If blank, a random key will be generated
   limits:
-    cpu: 0.5
+    cpu: 1 
     memory: 1Gi
   ingress:
     enabled: true
