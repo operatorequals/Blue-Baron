@@ -23,5 +23,5 @@ spec:
             cpu: {{ .Values.kibana.cpu }}
       serviceAccountName: {{ include "elastic-cluster.elasticsearch.serviceAccountName" $ }}
   secureSettings:
-    - secretName: {{ .Values.kibana.name }}-secret-settings
+    - secretName: {{ .Values.kibana.name }}-kb-secret-config
 {{ end }}
