@@ -29,3 +29,11 @@ output "kb-dns-internal"{
 output "kb-url-internal"{
   value = "https://${var.kibana-name}-kb-http.${var.namespace}:5601"
 }
+
+output "agent-dns-internal"{
+  value = "${var.fleet-name}-agent-http.${var.namespace}"
+}
+
+output "agent-url-internal"{
+  value = "https://${var.fleet-name}-agent-http.${var.namespace}:9200"
+}
