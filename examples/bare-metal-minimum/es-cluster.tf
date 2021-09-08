@@ -2,10 +2,11 @@ module "elastic-cluster"{
   source = "../../modules/elastic-cluster"
 
   namespace = var.siem-ns
-  values-file = "examples/bare-metal-minimum/helm-values/es-cluster.yaml"
+  cluster-version = "7.14.0"
 
-  es-name = "cluster"
+  es-name     = "cluster"
   kibana-name = "siem"
+  fleet-name  = "fleet"
 
   depends_on = [module.eck-operator]
 }
