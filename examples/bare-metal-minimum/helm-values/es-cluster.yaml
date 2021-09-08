@@ -1,7 +1,5 @@
 # ----
 elasticsearch:
-  name: ""
-  version: 7.9.0
   nodeSets:
     - name: nset1
       count: 1
@@ -12,18 +10,11 @@ elasticsearch:
         - "master"
         - "data"
         - "ingest"
-      limits:
-        cpu: 0.9
-        memory: 2Gi
-      heapSize: 1700m  # Use [m for Megabytes, g for gigabytes]
+      heapSize: 1200m  # Use [m for Megabytes, g for gigabytes]
       volumeClaims:
         enabled: true
         class: standard
         size: 512Mi
-  service:
-    enabled: true
-    type: ClusterIP
-    # name: elastisearch
   ingress:
     enabled: false
     annotations:
@@ -38,17 +29,12 @@ elasticsearch:
     tls: []
 # ----
 kibana:
-  name: ""
-  version: 7.9.0
   # To increase "count" - 'xpack.encryptedSavedObjects.encryptionKey' needs to be set
   count: 1
   encryptionKey:
-    enabled: True
+    enabled: true
     # 'xpack.encryptedSavedObjects.encryptionKey' value:
     value: "" # If blank, a random key will be generated
-  limits:
-    cpu: 0.5
-    memory: 1Gi
   ingress:
     enabled: true
     annotations:
@@ -58,4 +44,7 @@ kibana:
     # - name: ""
     #   path: "/"
     tls: []
+
+fleet:
+  enabled: true
 
