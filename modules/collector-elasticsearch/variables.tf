@@ -1,3 +1,7 @@
+variable name {
+  default = "fluentd-collector-elasticsearch"
+}
+
 variable namespace {
 }
 

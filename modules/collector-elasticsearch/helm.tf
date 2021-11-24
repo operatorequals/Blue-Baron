@@ -1,5 +1,5 @@
 resource "helm_release" "fluentd_out_es" {
-  name      = "fluentd-collector-elasticsearch"
+  name      = var.name
   chart     = "fluentd"
   repository = "https://charts.helm.sh/stable"
   namespace = var.namespace
