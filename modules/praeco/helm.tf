@@ -1,12 +1,12 @@
 resource "helm_release" "praeco" {
-  name      = "praeco"
-  chart = "praeco"
-  repository = "https://operatorequals.github.io/helm-chart"
-  namespace = var.namespace
-  create_namespace = true
-  dependency_update = true  # To use the `elastalert-server` Helm Chart
-  recreate_pods = true
-  
+  name              = "praeco"
+  chart             = "praeco"
+  repository        = "https://operatorequals.github.io/helm-chart"
+  namespace         = var.namespace
+  create_namespace  = true
+  dependency_update = true # To use the `elastalert-server` Helm Chart
+  recreate_pods     = true
+
   values = [
     file("${path.module}/../../${var.values-file}")
   ]
@@ -36,11 +36,11 @@ resource "helm_release" "praeco" {
     value = data.kubernetes_secret.es_credentials_k8s_secret.data[var.es_username]
   }
 
-  dynamic set {
+  dynamic "set" {
     for_each = var.ingress-annotations
     content {
       name  = "ingress.annotations.${set.key}"
-      value = "${set.value}"
+      value = set.value
     }
   }
 
@@ -52,6 +52,15 @@ resource "helm_release" "praeco" {
   set {
     name  = "praeco.external_host"
     value = var.ingress-hostname
+  }
+
+  dynamic "set" {
+    for_each = fileset(var.rules_directory, "*.rule.yaml")
+    content {
+      # File called 'network.slack.rule.yaml' becomes 'network-slack' in Praeco
+      name  = "elastalert-server.rules.${replace(replace(basename(set.value), ".", "-"), "-rule-yaml", "")}"
+      value = file("${var.rules_directory}/${set.value}")
+    }
   }
 
   depends_on = [data.kubernetes_secret.es_credentials_k8s_secret]
