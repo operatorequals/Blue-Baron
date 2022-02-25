@@ -21,6 +21,7 @@ elasticsearch:
         enabled: true
         class: standard
         size: 512Mi
+      config: {}
 
   # Annotations for Elasticsearch Pods, used by Cloud authenticators
   # like Kube2IAM
@@ -68,6 +69,7 @@ kibana:
   limits:
     cpu: 1 
     memory: 1Gi
+  config: {}
   ingress:
     enabled: true
     annotations:

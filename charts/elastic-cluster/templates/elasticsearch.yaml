@@ -18,6 +18,9 @@ spec:
         - "{{ $role }}"
       {{- end }}
       node.store.allow_mmap: {{ $nset.mmap.enabled }}
+      {{- range $key,$value := $nset.config }}
+      {{ $key }}: {{ $value }}
+      {{- end }}
     podTemplate:
       metadata:
         labels:
