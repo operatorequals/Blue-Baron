@@ -161,6 +161,12 @@ configMaps:
       logstash_format true
       logstash_prefix ${tag}
 
+      # Solves log gaps in K8s
+      # https://github.com/uken/fluent-plugin-elasticsearch/blob/master/README.Troubleshooting.md#stopped-to-send-events-on-k8s-why
+      reload_connections false
+      reconnect_on_error true
+      reload_on_failure true
+
       <buffer>
         @type file
         path /var/log/fluentd-buffers/kubernetes.system.buffer
